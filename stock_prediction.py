@@ -1,14 +1,5 @@
-#!/usr/bin/env python3
 """
 Stock Price Prediction using Linear Regression
-============================================
-
-This script demonstrates stock price prediction using linear regression with
-comprehensive feature engineering. It shows the limitations of linear models
-on non-linear financial data while providing interpretable results.
-
-Author: AI Assistant
-Date: 2024
 """
 
 import yfinance as yf
@@ -22,9 +13,6 @@ import seaborn as sns
 import warnings
 from datetime import datetime, timedelta
 import ta
-
-# Suppress warnings for cleaner output
-warnings.filterwarnings('ignore')
 
 class StockPricePredictor:
     """
@@ -50,7 +38,7 @@ class StockPricePredictor:
         
     def download_data(self):
         """Download historical stock data using yfinance."""
-        print(f"📊 Downloading {self.symbol} data from {self.start_date} to {self.end_date}...")
+        print(f"Downloading {self.symbol} data from {self.start_date} to {self.end_date}...")
         
         try:
             ticker = yf.Ticker(self.symbol)
@@ -59,11 +47,11 @@ class StockPricePredictor:
             if self.data.empty:
                 raise ValueError(f"No data found for {self.symbol}")
                 
-            print(f"✅ Downloaded {len(self.data)} days of data")
-            print(f"📈 Price range: ${self.data['Close'].min():.2f} - ${self.data['Close'].max():.2f}")
+            print(f"Downloaded {len(self.data)} days of data")
+            print(f"Price range: ${self.data['Close'].min():.2f} - ${self.data['Close'].max():.2f}")
             
         except Exception as e:
-            print(f"❌ Error downloading data: {e}")
+            print(f"Error downloading data: {e}")
             return False
             
         return True
@@ -73,10 +61,10 @@ class StockPricePredictor:
         Engineer features for the prediction model.
         This is where we create meaningful features that might help predict stock prices.
         """
-        print("🔧 Engineering features...")
+        print("Engineering features...")
         
         if self.data is None:
-            print("❌ No data available. Please download data first.")
+            print("No data available. Please download data first.")
             return False
         
         # Create a copy to avoid modifying original data
@@ -133,7 +121,7 @@ class StockPricePredictor:
         # Store feature names for later use
         self.feature_names = [col for col in df.columns if col not in ['Open', 'High', 'Low', 'Close', 'Volume']]
         
-        print(f"✅ Created {len(self.feature_names)} features:")
+        print(f"Created {len(self.feature_names)} features:")
         for i, feature in enumerate(self.feature_names, 1):
             print(f"   {i:2d}. {feature}")
         
@@ -147,7 +135,7 @@ class StockPricePredictor:
         Args:
             test_size (float): Proportion of data to use for testing
         """
-        print("📋 Preparing data for modeling...")
+        print("Preparing data for modeling...")
         
         # Remove rows with NaN values (from lag features and rolling averages)
         df_clean = self.data.dropna()
@@ -168,9 +156,9 @@ class StockPricePredictor:
         self.X_train_scaled = self.scaler.fit_transform(self.X_train)
         self.X_test_scaled = self.scaler.transform(self.X_test)
         
-        print(f"✅ Training set: {len(self.X_train)} samples")
-        print(f"✅ Test set: {len(self.X_test)} samples")
-        print(f"✅ Features shape: {self.X_train.shape[1]}")
+        print(f"Training set: {len(self.X_train)} samples")
+        print(f"Test set: {len(self.X_test)} samples")
+        print(f"Features shape: {self.X_train.shape[1]}")
         
         return True
     
@@ -185,12 +173,12 @@ class StockPricePredictor:
         self.y_train_pred = self.model.predict(self.X_train_scaled)
         self.y_test_pred = self.model.predict(self.X_test_scaled)
         
-        print("✅ Model training completed!")
+        print("Model training completed!")
         return True
     
     def evaluate_model(self):
         """Evaluate the model performance."""
-        print("\n📊 MODEL EVALUATION")
+        print("\nMODEL EVALUATION")
         print("=" * 50)
         
         # Calculate metrics
@@ -204,12 +192,12 @@ class StockPricePredictor:
         test_r2 = r2_score(self.y_test, self.y_test_pred)
         
         # Print results
-        print(f"📈 TRAINING SET:")
+        print(f"TRAINING SET:")
         print(f"   MAE: ${train_mae:.2f}")
         print(f"   MSE: ${train_mse:.2f}")
         print(f"   R²:  {train_r2:.4f}")
         
-        print(f"\n📊 TEST SET:")
+        print(f"\nTEST SET:")
         print(f"   MAE: ${test_mae:.2f}")
         print(f"   MSE: ${test_mse:.2f}")
         print(f"   R²:  {test_r2:.4f}")
@@ -218,7 +206,7 @@ class StockPricePredictor:
         train_mape = np.mean(np.abs((self.y_train - self.y_train_pred) / self.y_train)) * 100
         test_mape = np.mean(np.abs((self.y_test - self.y_test_pred) / self.y_test)) * 100
         
-        print(f"\n📊 PERCENTAGE ERRORS:")
+        print(f"\nPERCENTAGE ERRORS:")
         print(f"   Training MAPE: {train_mape:.2f}%")
         print(f"   Test MAPE: {test_mape:.2f}%")
         
@@ -235,7 +223,7 @@ class StockPricePredictor:
     
     def plot_results(self):
         """Create comprehensive visualization of results."""
-        print("\n📊 Creating visualizations...")
+        print("\nCreating visualizations...")
         
         # Set up the plotting style
         plt.style.use('seaborn-v0_8')
@@ -290,7 +278,7 @@ class StockPricePredictor:
         plt.savefig(f'{self.symbol}_prediction_results.png', dpi=300, bbox_inches='tight')
         plt.show()
         
-        print("✅ Visualizations saved as '{}_prediction_results.png'".format(self.symbol))
+        print("Visualizations saved as '{}_prediction_results.png'".format(self.symbol))
     
     def analyze_feature_correlations(self):
         """Analyze correlations between features and target."""
@@ -313,7 +301,7 @@ class StockPricePredictor:
     
     def run_complete_analysis(self):
         """Run the complete analysis pipeline."""
-        print(f"🚀 Starting Stock Price Prediction Analysis for {self.symbol}")
+        print(f"Starting Stock Price Prediction Analysis for {self.symbol}")
         print("=" * 60)
         
         # Step 1: Download data
@@ -341,7 +329,7 @@ class StockPricePredictor:
         # Step 7: Create visualizations
         self.plot_results()
         
-        print("\n🎉 Analysis completed!")
+        print("\nAnalysis completed!")
         print("=" * 60)
         
         return metrics
@@ -353,7 +341,7 @@ def main():
     # List of popular stocks to choose from
     stocks = ['AAPL', 'META', 'COIN', 'NVDA', 'TSLA', 'MSFT', 'GOOGL']
     
-    print("📈 STOCK PRICE PREDICTION WITH LINEAR REGRESSION")
+    print("STOCK PRICE PREDICTION WITH LINEAR REGRESSION")
     print("=" * 60)
     print("Available stocks:", ', '.join(stocks))
     print()
