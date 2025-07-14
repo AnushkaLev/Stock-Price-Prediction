@@ -1,10 +1,5 @@
-#!/usr/bin/env python3
 """
 Example Usage of Stock Price Prediction Model
-============================================
-
-This script demonstrates how to use the StockPricePredictor class
-with different stocks and configurations.
 """
 
 from stock_prediction import StockPricePredictor
@@ -16,11 +11,11 @@ def analyze_multiple_stocks():
     stocks = ['AAPL', 'META', 'NVDA', 'TSLA']
     results = {}
     
-    print("🔍 COMPARING MULTIPLE STOCKS")
+    print("COMPARING MULTIPLE STOCKS")
     print("=" * 50)
     
     for stock in stocks:
-        print(f"\n📊 Analyzing {stock}...")
+        print(f"\nAnalyzing {stock}...")
         
         try:
             # Create predictor
@@ -35,10 +30,10 @@ def analyze_multiple_stocks():
             
             if metrics:
                 results[stock] = metrics
-                print(f"✅ {stock} analysis completed!")
+                print(f"{stock} analysis completed!")
                 
         except Exception as e:
-            print(f"❌ Error analyzing {stock}: {e}")
+            print(f"Error analyzing {stock}: {e}")
     
     # Compare results
     if results:
@@ -59,7 +54,7 @@ def analyze_multiple_stocks():
         
         # Find best performing stock
         best_stock = max(results.items(), key=lambda x: x[1]['test_r2'])
-        print(f"\n🏆 Best performing stock: {best_stock[0]} (R² = {best_stock[1]['test_r2']:.4f})")
+        print(f"\nBest performing stock: {best_stock[0]} (R² = {best_stock[1]['test_r2']:.4f})")
 
 def custom_analysis():
     """Demonstrate custom analysis with different parameters."""
@@ -86,7 +81,7 @@ def custom_analysis():
                     print("5. Evaluating performance...")
                     metrics = predictor.evaluate_model()
                     
-                    print(f"\n📊 COIN Analysis Results:")
+                    print(f"\n COIN Analysis Results:")
                     print(f"   Test R²: {metrics['test_r2']:.4f}")
                     print(f"   Test MAE: ${metrics['test_mae']:.2f}")
                     print(f"   Test MAPE: {metrics['test_mape']:.2f}%")
@@ -113,13 +108,13 @@ def quick_test():
     results = predictor.run_complete_analysis()
     
     if results:
-        print(f"\n✅ Quick test completed!")
+        print(f"\nQuick test completed!")
         print(f"   Microsoft stock prediction accuracy: {results['test_r2']:.1%}")
 
 def main():
     """Main function to run examples."""
     
-    print("📈 STOCK PREDICTION EXAMPLES")
+    print("STOCK PREDICTION EXAMPLES")
     print("=" * 60)
     
     # Example 1: Quick test
@@ -131,7 +126,7 @@ def main():
     # Example 3: Multiple stocks comparison
     analyze_multiple_stocks()
     
-    print("\n🎉 All examples completed!")
+    print("\nAll examples completed!")
     print("Check the generated PNG files for visualizations.")
 
 if __name__ == "__main__":
